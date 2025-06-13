@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xpersonaa/components/my_button.dart';
 import 'package:xpersonaa/components/my_textfield.dart';
+import 'package:xpersonaa/features/auth/presentation/cubits/auth_cubit.dart';
 
 class LoginPage extends StatefulWidget{
   final void Function()? tooglePages;
@@ -13,6 +15,26 @@ class LoginPage extends StatefulWidget{
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  void login(){
+    final email = emailController.text;
+    final password = passwordController.text;
+
+    final authCubit = context.read<AuthCubit>();
+
+    if(email.isNotEmpty || password.isNotEmpty) {
+      authCubit.login(email, password);
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please fill all the fields")));
+    }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +70,9 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
               const SizedBox(height: 15,),
-              MyButton(text: "Login", onTap: (){}),
+              MyButton(text: "Login", onTap: (){
+                login();
+              }),
 
               const SizedBox(height: 60,),
               Row(

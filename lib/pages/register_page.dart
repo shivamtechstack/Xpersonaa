@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:xpersonaa/components/my_button.dart';
 import 'package:xpersonaa/components/my_textfield.dart';
+import 'package:xpersonaa/features/auth/presentation/cubits/auth_cubit.dart';
 
 class RegisterPage extends StatefulWidget{
   final void Function()? tooglePages;
@@ -16,7 +18,24 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
+  void register(){
+    final name = nameController.text;
+    final email = emailController.text;
+    final password = passwordController.text;
+    final confirmPassword = confirmPasswordController.text;
 
+    final authCubit = context.read<AuthCubit>();
+
+    if(name.isNotEmpty || email.isNotEmpty || password.isNotEmpty || confirmPassword.isNotEmpty){
+      if(password == confirmPassword){
+        authCubit.register(name, email, password);
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Passwords don't match")));
+      }
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Please fill all the fields")));
+      }
+    }
 
   @override
   Widget build(BuildContext context) {
