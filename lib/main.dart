@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:xpersonaa/firebase_options.dart';
+import 'package:xpersonaa/pages/auth_page.dart';
 import 'package:xpersonaa/pages/login_page.dart';
+import 'package:xpersonaa/themes/light_mode.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,10 +18,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'A social media app',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: LoginPage(),
+      theme: lightMode,
+      home: AuthPage(),
     );
   }
 }
