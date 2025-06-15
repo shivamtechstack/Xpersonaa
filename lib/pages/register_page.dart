@@ -65,7 +65,9 @@ class _RegisterPageState extends State<RegisterPage> {
               MyTextField(hintText: "Confirm Password", obscureText: true, controller: confirmPasswordController),
 
               const SizedBox(height: 15,),
-              MyButton(text: "Create Account", onTap: (){}),
+              MyButton(text: "Create Account", onTap: (){
+                register();
+              }),
 
               const SizedBox(height: 60,),
               Row(
